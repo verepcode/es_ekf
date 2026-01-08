@@ -132,7 +132,7 @@ public:
         return sigma * q_vec;
     }
 
-    const Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d &vector) const{
+    Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d &vector) const{
         Eigen::Matrix3d result_matrix = Eigen::Matrix3d::Zero();
         result_matrix << 0, -vector.z(),  vector.y(),
                 vector.z(),           0, -vector.x(),
@@ -141,6 +141,15 @@ public:
         return result_matrix;
     }
 
+    Eigen::Vector3d toEuler() const {
+        double roll = atan2(2 * (q_.w() * q_.x() + q_.y() * q_.z()),
+                            1 - 2 * (q_.x() * q_.x() + q_.y() * q_.y()));
+        double pitch = asin(2 * (q_.w() * q_.y() - q_.z() * q_.x()));
+        double yaw = atan2(2 * (q_.w() * q_.z() + q_.x() * q_.y()), 
+                            1 - 2 * (q_.y() * q_.y() + q_.z() * q_.z()));
+        
+        return Eigen::Vector3d(roll, pitch, yaw);
+    }
 
 private: 
     Eigen::Quaterniond q_;
