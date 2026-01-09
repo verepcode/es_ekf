@@ -142,16 +142,41 @@ public:
     }
 
     Eigen::Vector3d toEuler() const {
-        double roll = atan2(2 * (q_.w() * q_.x() + q_.y() * q_.z()),
+        double roll = std::atan2(2 * (q_.w() * q_.x() + q_.y() * q_.z()),
                             1 - 2 * (q_.x() * q_.x() + q_.y() * q_.y()));
-        double pitch = asin(2 * (q_.w() * q_.y() - q_.z() * q_.x()));
-        double yaw = atan2(2 * (q_.w() * q_.z() + q_.x() * q_.y()), 
+        double pitch = std::asin(2 * (q_.w() * q_.y() - q_.z() * q_.x()));
+        double yaw = std::atan2(2 * (q_.w() * q_.z() + q_.x() * q_.y()), 
                             1 - 2 * (q_.y() * q_.y() + q_.z() * q_.z()));
         
         return Eigen::Vector3d(roll, pitch, yaw);
     }
 
-private: 
+    Eigen::Vector3d toAxisAngle() const {
+        
+        double theta = 2 * std::acos(q_.w());
+
+        if(theta < 1e-10){
+            return Eigen::Vector3d::Zero(); // Zero for infinitesimal angles
+        }
+
+        Eigen::Vector3d axis(q_.x(), q_.y(), q_.z());
+        Eigen::Vector3d axis_normalized = axis / sin(theta / 2);
+
+        return axis_normalized * theta;
+    }
+
+    Eigen::Matrix3d toMatrix() const {
+        Eigen::Vector3d v(q_.x(), q_.y(), q_.z());
+        double w = q_.w();
+        double vTv = v.dot(v);
+        Eigen::Matrix3d vvT = v * v.transpose();
+
+        return (w * w - vTv) * Eigen::Matrix3d::Identity()
+                + 2.0 * vvT
+                + 2.0 * w * skewSymmetric(v);
+    }
+    
+    private: 
     Eigen::Quaterniond q_;
 
     // Private constructor - sadece factory metodlar kullanır
