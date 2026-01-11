@@ -176,6 +176,13 @@ public:
                 + 2.0 * w * skewSymmetric(v);
     }
     
+    Orientation& normalize(){
+        Eigen::Vector4d vector(q_.w(), q_.x(), q_.y(), q_.z());
+        double norm = vector.norm();
+        q_ = Eigen::Quaterniond((q_.w()) / norm, (q_.x()) / norm, (q_.y()) / norm, (q_.z()) / norm);
+        return *this;
+    }
+    
     private: 
     Eigen::Quaterniond q_;
 
