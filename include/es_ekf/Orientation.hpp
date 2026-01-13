@@ -15,6 +15,7 @@
 
 #include <Eigen/Dense>
 #include <cmath>
+#include <iomanip>
 
 namespace es_ekf{
 
@@ -26,6 +27,16 @@ public:
     {}
     const Eigen::Quaterniond& quaternion() const { return q_}
     
+    friend std::ostream& operator<<(std::ostream& os, Orientation& o){
+        os << "Quaternion (wxyz): ["
+           << std::fixed << std::setprecision(5)
+           << o.q_.w() << ", "
+           << o.q_.x() << ", "
+           << o.q_.y() << ", "
+           << o.q_.z() << "] ";
+        return os;
+    }
+
     static Orientation fromEuler(double roll, double pitch, double yaw){
         double cy = std::cos(yaw / 2);
         double sy = std::sin(yaw / 2);
