@@ -16,6 +16,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <iomanip>
+#include "es_ekf/Utils.hpp"
 
 namespace es_ekf{
 
@@ -141,15 +142,6 @@ public:
         Eigen::Vector4d q_vec(other.q_.w(), other.q_.x(), other.q_.y(), other.q_.z());
 
         return sigma * q_vec;
-    }
-
-    Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d &vector) const{
-        Eigen::Matrix3d result_matrix = Eigen::Matrix3d::Zero();
-        result_matrix << 0, -vector.z(),  vector.y(),
-                vector.z(),           0, -vector.x(),
-               -vector.y(),  vector.x(),           0;
-        
-        return result_matrix;
     }
 
     Eigen::Vector3d toEuler() const {
