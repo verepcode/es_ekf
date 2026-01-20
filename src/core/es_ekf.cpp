@@ -1,3 +1,4 @@
+#include  <es_ekf/types.h>
 
 class StateEstimator {
 
@@ -5,7 +6,7 @@ class StateEstimator {
         StateEstimator();
         ~StateEstimator();
 
-        void es_ekf(sensor_msgs::Imu imu_data, gnss_data);
+        struct PredictionResult prediction_model( data_for_prediction, gnss_data);
 
     private:
 
