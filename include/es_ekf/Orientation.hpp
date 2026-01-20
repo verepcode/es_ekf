@@ -16,7 +16,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <iomanip>
-#include "es_ekf/Utils.hpp"
+#include "es_ekf/MathUtils.hpp"
 
 namespace es_ekf{
 
@@ -26,7 +26,7 @@ public:
     Orientation() 
         : q_(Eigen::Quaterniond::Identity()) 
     {}
-    const Eigen::Quaterniond& quaternion() const { return q_}
+    const Eigen::Quaterniond& quaternion() const { return q_;}
     
     friend std::ostream& operator<<(std::ostream& os, Orientation& o){
         os << "Quaternion (wxyz): ["
