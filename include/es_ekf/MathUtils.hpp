@@ -47,4 +47,10 @@ namespace es_ekf{
                                 a[0]/na,                      a[1]/na,                     a[2]/na;
         return Jr * Ja;
     }
+    inline double degToRad(const double& degree){
+        return degree / 180 * M_PI;
+    }
+    inline double radToDeg(const double& radian){
+        return radian / M_PI * 180;
+    }
 }
