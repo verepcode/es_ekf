@@ -11,7 +11,7 @@
                         See C2M5L2 for details.
     :param euler: Set of three XYZ Euler angles.*/
 
-    #pragma once
+#pragma once
 
 #include <Eigen/Dense>
 #include <cmath>
