@@ -6,30 +6,32 @@
 
 namespace es_ekf {
 
-struct State {
-    Eigen::Vector3d position;
-    Eigen::Vector3d velocity;
-    Orientation orientation;
-    // Toplam error-state boyutu: 3 + 3 + 3 = 9 };
-    // orientation error 3, quaternion değil
+    struct State {
+        Eigen::Vector3d position;
+        Eigen::Vector3d velocity;
+        Orientation orientation;
+        Eigen::Matrix<double, 9, 9> covariance;
+        // Toplam error-state boyutu: 3 + 3 + 3 = 9 };
+        // orientation error 3, quaternion değil
 
-    static constexpr int ERROR_STATE_DIM = 9;
-    //Default constructor
-    State()
-        : position(Eigen::Vector3d::Zero()),
-          velocity(Eigen::Vector3d::Zero()),
-          orientation() 
-    {}
+        static constexpr int ERROR_STATE_DIM = 9;
+        //Default constructor
+        State()
+            : position(Eigen::Vector3d::Zero()),
+            velocity(Eigen::Vector3d::Zero()),
+            orientation(),
+            covariance(Eigen::Matrix<double, 9, 9>::Zero()) 
+        {}
 
-    //Error-state'i nominal state'e uygula
-    void applyErrorState(const Eigen::VectorXd& delta) {
-        position += delta.segment<3>(0);
-        velocity += delta.segment<3>(3);
-        orientation.applyErrorState(delta.segment<3>(6));
-    }
+        //Error-state'i nominal state'e uygula
+        void applyErrorState(const Eigen::VectorXd& delta) {
+            position += delta.segment<3>(0);
+            velocity += delta.segment<3>(3);
+            orientation.applyErrorState(delta.segment<3>(6));
+        }
 
 
 
-};
+    };
 
 } //namespace es_ekf
