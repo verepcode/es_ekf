@@ -25,9 +25,20 @@ public:
         state_check_.velocity = state_hat_.velocity + acc * delta_t;
         state_check_.orientation = Orientation::fromAxisAngle(w * delta_t)
                                     .quatMultRight(state_hat_.orientation);
-        
-        f_jac_.block<3, 3>(0);
-        
+
+        //Linearize the motion model and compute Jacobians
+        //motion model state jacobian
+        f_jac_.block<3, 3>(0, 3) = Eigen::Matrix3d::Identity() * delta_t;
+        f_jac_.block<3, 3>(3, 6) = -rot_mat * skewSymmetric(f) * delta_t;
+
+        //Propagate uncertainty
+        Eigen::Matrix<double, 6, 1> v;
+        v.head<3>().setConstant(var_imu_f_);
+        v.tail<3>().setConstant(var_imu_w_);
+        // Now, v = [var_imu_f_, var_imu_f_, var_imu_f_, var_imu_w_, var_imu_w_, var_imu_w_]
+        Eigen::Matrix<double, 6, 6> q_km = delta_t*delta_t * v.asDiagonal();
+        state_check_.covariance = f_jac_ * (state_hat_.covariance * f_jac_.transpose()) + 
+                                  l_jac_ * (q_km * l_jac_.transpose());
     }
     UpdateResult update(const GNSSData& gnss){
 
