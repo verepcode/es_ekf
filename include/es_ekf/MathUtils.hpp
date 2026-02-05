@@ -8,7 +8,7 @@
 namespace es_ekf{
     using std::sqrt;
 
-    inline Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d v) const {
+    inline Eigen::Matrix3d skewSymmetric(const Eigen::Vector3d v) {
 
         Eigen::Matrix3d result_matrix = Eigen::Matrix3d::Zero();
         result_matrix << 0, -v[2], v[1],
