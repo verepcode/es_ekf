@@ -37,6 +37,11 @@ public:
            << o.q_.z() << "] ";
         return os;
     }
+    
+    static Orientation fromEuler(const Eigen::Vector3d &euler)
+    {
+        return fromEuler(euler(0), euler(1), euler(2));
+    }
 
     static Orientation fromEuler(double roll, double pitch, double yaw){
         double cy = std::cos(yaw / 2);
