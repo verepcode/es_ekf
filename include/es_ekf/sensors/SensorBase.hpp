@@ -9,8 +9,6 @@ namespace es_ekf{
 class SensorBase{
     public:
         virtual ~SensorBase() = default;
-        virtual Eigen::VectorXd predict(const State& state) = 0;
-        virtual Eigen::MatrixXd getJacobian(const State& state) = 0;
-        virtual Eigen::MatrixXd getNoiseCovariance() = 0;
+        virtual Eigen::MatrixXd getNoiseCovariance() const = 0;
 };
 }//namespace es_ekf
