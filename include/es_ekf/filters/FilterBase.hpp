@@ -4,8 +4,6 @@
 #include "es_ekf/core/Types.hpp"
 #include "es_ekf/core/State.hpp"
 
-namespace es_ekf{
-
 class FilterBase {
     public:
         virtual ~FilterBase() = default;
@@ -15,4 +13,3 @@ class FilterBase {
         virtual const Eigen::MatrixXd& getCovariance() const = 0;
 
 };
-}//namespace es_ekf
