@@ -5,17 +5,17 @@
 
 using namespace es_ekf;
 
-class StateEstimator 
+class ES_EKF : 
 {
 
 public:
-    StateEstimator()
+    ES_EKF()
     {
         h_jac_.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
         l_jac_.block<6, 6>(3, 0) = Eigen::Matrix<double, 6, 6>::Identity();
     }
 
-    State predict(const ImuData& imu, const double& delta_t){
+    State ES_EKF::predict(const ImuData& imu, const double& delta_t){
 
         Eigen::Vector3d f = imu.linear_accel;
         Eigen::Vector3d w = imu.ang_vel;
@@ -42,7 +42,7 @@ public:
                                   l_jac_ * (q_km * l_jac_.transpose());
         return state_check_;
     }
-    State update(const GNSSData& gnss, State state_check_){
+    State ES_EKF::update(const GNSSData& gnss, State state_check_){
         Eigen::Vector3d R = gnss.covariance.asDiagonal(); // Turn 1x3 vector into 3x3 diagonal matrix
         Eigen::Matrix<double, 9, 9> cov_check = state_check_.covariance;
         //Compute Kalman gain
