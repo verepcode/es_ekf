@@ -2,11 +2,9 @@
 
 #pragma once
 
-#include "es_ekf/core/State.hpp"
-#include "es_ekf/core/Types.hpp"
+#include "core/State.hpp"
+#include "core/Types.hpp"
 #include <Eigen/Dense>
-
-namespace es_ekf{
 
 class MotionModel{
     public:
@@ -15,4 +13,3 @@ class MotionModel{
         virtual Eigen::MatrixXd getJacobian(const State& state, double dt) = 0;
         virtual Eigen::MatrixXd getNoiseCovariance(double dt) = 0;
 };
-}//namespace es_ekf

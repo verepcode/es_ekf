@@ -6,7 +6,6 @@
 #include "es_ekf/MathUtils.hpp"
 #include <iomanip>
 
-namespace es_ekf{
 
 class GPSUtils
 /*
@@ -139,4 +138,3 @@ public:
     Eigen::Matrix3d R_;
     Eigen::Vector3d origin_ecef_;
 };
-}

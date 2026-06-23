@@ -2,9 +2,8 @@
 
 #pragma once
 
-#include "es_ekf/models/MotionModel.hpp"
+#include "models/MotionModel.hpp"
 
-namespace es_ekf{
 
 class ImuMotionModel : public MotionModel{
     public:
@@ -45,4 +44,3 @@ class ImuMotionModel : public MotionModel{
         double var_imu_w_ = 15;
         double var_gnss_ = 8;
 };
-}

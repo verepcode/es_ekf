@@ -1,9 +1,8 @@
-//include/es_ekf/sensors/IMUSensor.hpp
+//include/sensors/IMUSensor.hpp
 #pragma once
 
-#include "es_ekf/sensors/SensorBase.hpp"
+#include "sensors/SensorBase.hpp"
 
-namespace es_ekf{
 
 class IMUSensor : public SensorBase{
 
@@ -22,5 +21,4 @@ class IMUSensor : public SensorBase{
             void setVariance(double variance) { variance_ = variance; }
     private:
             double variance_ = 1.0;
-}
 }

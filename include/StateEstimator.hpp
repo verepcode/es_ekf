@@ -1,9 +1,8 @@
-#include  "es_ekf/Types.hpp"
-#include "es_ekf/State.hpp"
-#include "es_ekf/Orientation.hpp"
+#include  "Types.hpp"
+#include "State.hpp"
+#include "Orientation.hpp"
 #include <Eigen/Dense>
 
-using namespace es_ekf;
 
 class StateEstimator 
 {

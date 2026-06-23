@@ -1,8 +1,8 @@
-//include/es_ekf/sensors/GNSSSensor.hpp
+//include/sensors/GNSSSensor.hpp
 #pragma once
-#include "es_ekf/sensors/SensorBase.hpp"
+#include "sensors/SensorBase.hpp"
 
-namespace es_ekf{
+
 class GNSSSensor : public SensorBase{
     public: 
         GNSSSensor(double variance = 1.0)
@@ -23,4 +23,3 @@ class GNSSSensor : public SensorBase{
     private:
         double variance_ = 1.0;
 };
-}

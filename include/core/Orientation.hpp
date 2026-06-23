@@ -1,4 +1,4 @@
-// include/es_ekf/Orientation.hpp
+// include/Orientation.hpp
 
 /*
     Allow initialization with explicit quaterion wxyz, axis-angle, or Euler XYZ (RPY) angles.
@@ -16,9 +16,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <iomanip>
-#include "es_ekf/MathUtils.hpp"
-
-namespace es_ekf{
+#include "MathUtils.hpp"
 
 class Orientation {
 public:
@@ -191,10 +189,14 @@ public:
         return *this;
     }
     
+    void applyErrorState(const Eigen::Vector3d& dtheta){
+        //çarpımsal enjeksiyon: q <- dq x q
+        *this = Orientation::fromAxisAngle(dtheta).quatMultRight(*this);
+        normalize();
+    }
     private: 
     Eigen::Quaterniond q_;
 
     // Private constructor - sadece factory metodlar kullanır
     explicit Orientation(const Eigen::Quaterniond& q) : q_(q) {}
 };
-} //namespace es_ekf
